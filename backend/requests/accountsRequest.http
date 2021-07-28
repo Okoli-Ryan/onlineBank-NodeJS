@@ -1,0 +1,51 @@
+post http://localhost:3000/accounts
+Content-Type: application/json
+
+{
+    "bank": "GreatFunds"
+}
+
+###
+
+get http://localhost:3000/accounts
+Content-Type: application/json
+
+###
+
+post http://localhost:3000/accounts/getAccount
+Content-Type: application/json
+
+{
+    "accountNumber": "0000000000",
+    "bank": "Stanbic"    
+}
+
+###
+post http://localhost:3000/accounts/depBalance/60f4d2325a774e1b18d5cead
+Content-Type: application/json
+
+{
+    "amount": 100000  
+}
+
+###
+
+post http://localhost:3000/accounts/witBalance/60e394e7e48b4535588ab1a0
+Content-Type: application/json
+
+{
+    "amount": 20  
+}
+
+###
+
+###
+post http://localhost:3000/accounts/transfer/60e39031e35b37376c56da08
+Content-Type: application/json
+
+{
+    "accountNumber": "0000000000",
+    "bank": "Stanbic",
+    "amount": 1000    
+}
+

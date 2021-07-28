@@ -1,0 +1,43 @@
+post http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "Stephen Holiday",
+    "email": "okoliryan50@gmail.com",
+    "bank": "GTB"
+}
+
+###
+
+get http://localhost:3000/users
+Content-Type: application/json
+
+###
+post http://localhost:4000/userAuths/setPin
+Content-Type: application/json
+
+{
+    "id": "60f4d2325a774e1b18d5cead",
+    "pin": "404040"
+}
+
+###
+
+post http://localhost:4000/userAuths/login
+Content-Type: application/json
+
+{
+    "accountNumber": "0000000001",
+    "bank": "GTB",
+    "pin": "404040"
+}
+
+###
+
+get http://localhost:4000/userAuths/cookie
+Content-Type: application/json
+
+###
+
+get http://localhost:4000/userAuths/logout
+Content-Type: application/json

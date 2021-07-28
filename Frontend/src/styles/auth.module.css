@@ -1,0 +1,73 @@
+
+.welcome_text{
+    font-family: Poppins;
+    margin-left: 1rem;
+    margin: 0;
+    padding: 1rem;
+}
+
+.welcome_text > span{
+    color: white;
+}
+
+.form_container{
+    margin-top: 5rem;
+}
+
+.form_container > h2{
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: row;
+    flex-basis: 30%;
+    justify-content: space-around;
+    padding: 0 .5rem
+}
+
+section{
+    position: relative;
+    width: 33%;
+    padding: 0 .5rem;
+}
+
+section > div > img{
+    position: absolute;
+    left: 1.2rem;
+    top: 4.5rem;
+    width: .9rem;
+    height: .9rem;
+}
+
+.font, section > p, .form_container > h2{
+    font-family: Poppins;
+}
+
+.header{
+    margin-left: 2rem;
+}
+
+.form_container > h2, .welcome_text{
+    color: rgb(110, 196, 167)
+}
+
+.form_container > button{
+    margin: 2rem auto 1rem auto;
+    display: flex;
+    padding: .4rem 1rem;
+    color: #002022
+}
+
+a{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color:white;
+    text-decoration: none;
+}
+
+a > span{
+    color: rgb(110, 196, 167);
+    margin-left: .3rem;
+}

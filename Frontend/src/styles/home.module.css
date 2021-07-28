@@ -1,0 +1,32 @@
+.heading_text{
+    color: rgb(110, 196, 167);
+    margin-left: 1rem;
+    margin: 0;
+    padding: 1rem
+}
+
+.container{
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.option{
+    display: flex;
+    flex-Direction: row;
+        flex-basis: 45%;
+        margin: 2rem auto;
+        background-color: transparent;
+        outline: none;
+        justify-content: space-around;
+        border: none;
+        cursor: pointer;
+    transition: all .3s ease-in-out;
+
+}
+
+.option:hover{
+    background-color: rgb(49, 49, 49);
+}
