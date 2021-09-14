@@ -12,12 +12,16 @@ const sendMail = (name, email, id, bank) => {
 
   const transport = nodemailer.createTransport({
     service: "Gmail",
+    host: "smtp.gmail.com",
+    secure: true,
+    port: 465,
     auth: {
       user: user,
       pass: pass,
     },
   });
 
+  //!change of url for verification
   transport
     .sendMail({
       from: user,
@@ -26,7 +30,7 @@ const sendMail = (name, email, id, bank) => {
       html: `<h1>Email Confirmation</h1>
         <h2>Hello ${name}</h2>
         <p>Welcome to the OnlineBanking Platform. Please confirm your email by clicking on the following link</p>
-        <a href=http://localhost:4000/userAuths/confirm/${id}/${jwtSecret}> Click here</a>
+        <a href=http://localhost:3000/verify/${id}/${jwtSecret}> Click here</a>
         </div>`,
     })
     .then(() => setConfirmationCode(jwtSecret, id))

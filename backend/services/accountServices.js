@@ -8,7 +8,7 @@ const createAccount = async (bank) => {
     },
     function (err, count) {
       if (err) {
-        res.json({ message: err });
+        res.json({ error: err });
         return 0;
       }
     }

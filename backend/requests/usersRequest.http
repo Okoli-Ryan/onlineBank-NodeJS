@@ -1,4 +1,4 @@
-post http://localhost:3000/users
+post http://localhost:5000/users
 Content-Type: application/json
 
 {
@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ###
 
-get http://localhost:3000/users
+get http://localhost:5000/users
 Content-Type: application/json
 
 ###

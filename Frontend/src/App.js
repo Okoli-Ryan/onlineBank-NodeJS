@@ -7,32 +7,32 @@ import Login from "./routes/login";
 import Verification from "./routes/Verification";
 import UserHome from "./routes/userHome";
 import SetupPin from "./routes/setUpPin";
-import { UserContext, reducer } from "./context";
+import { Provider } from "react-redux";
+import store from "./store";
 
 function App() {
   const loc = useLocation();
 
-  const [userState, userDispatch] = useReducer(reducer, {});
-
-  const userValue = useMemo(() => {
-    return { userState, userDispatch };
-  }, [userState, userDispatch]);
-
   return (
-    <UserContext.Provider value={userValue}>
+    <Provider store={store}>
       <Header />
       <div className="body">
         <AnimatePresence exitBeforeEnter>
           <Switch location={loc} key={loc.key}>
+            <Route path="/" exact component={UserHome} />
+
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
-            <Route path="/verify" exact component={Verification} />
+            <Route
+              path="/verify/:vId/:vSecret"
+              exact
+              component={Verification}
+            />
             <Route path="/setupPin" exact component={SetupPin} />
-            <Route path="/" exact component={UserHome} />
           </Switch>
         </AnimatePresence>
       </div>
-    </UserContext.Provider>
+    </Provider>
   );
 }
 

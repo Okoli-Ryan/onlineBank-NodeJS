@@ -25,7 +25,7 @@ function createConnection(uri) {
 
   return db;
 }
-
+ 
 const bankConnection = createConnection(BANK_URI);
 const authConnection = createConnection(AUTH_URI);
 

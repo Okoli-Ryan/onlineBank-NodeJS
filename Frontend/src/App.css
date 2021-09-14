@@ -87,7 +87,7 @@ button{
 }
 
 
-input[type="text"], input[type="number"]{
+input[type="text"], input[type="number"], input[type="password"], input[type="email"]{
   width: 100%;
   padding: 8px 0 8px 40px;
   border: 1px solid #ccc;
@@ -104,4 +104,8 @@ input[type="text"], input[type="number"]{
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
+}
+
+.font{
+  font-family: Poppins;
 }

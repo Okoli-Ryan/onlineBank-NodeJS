@@ -1,15 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import UserIcon from "../assets/user.svg";
+import PasswordIcon from "../assets/padlock.svg";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import styles from "../styles/auth.module.css";
 import useForm from "../customhooks/useForm";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const banks = ["Apex", "GTB", "Stanbic", "Star"];
 
 export default function Login() {
   const { data, setFormData: setData } = useForm();
+
+  const user = useSelector((state) => state.authReducer);
+  const history = useHistory();
+
+  if (user) {
+    history.replace("/");
+  }
 
   return (
     <>
@@ -19,7 +29,7 @@ export default function Login() {
       <div className={styles.form_container}>
         <h2>Log in</h2>
         <form>
-        <section>
+          <section>
             <p className="label">Account Number</p>
             <div>
               <img src={UserIcon} alt="" />
@@ -34,7 +44,7 @@ export default function Login() {
           <section>
             <p className="label">Pin</p>
             <div>
-              <img src={UserIcon} alt="" />
+              <img src={PasswordIcon} alt="" />
               <input
                 type="password"
                 onChange={(e) => {

@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-const UseForm = () => {
-  const [data, setData] = useState({});
+const UseForm = (init) => {
+  const [data, setData] = useState(init);
 
   const setFormData = (e, tag) => {
     setData((prev) => {
       return {
-        data: { ...prev.data, [tag]: e.toLowerCase().trim() },
+        ...prev,
+        [tag]: e.toLowerCase().trim(),
       };
     });
   };

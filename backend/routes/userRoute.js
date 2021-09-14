@@ -14,8 +14,13 @@ router.get("/", async (req, res) => {
     );
     res.json(users);
   } catch (e) {
-    res.json({ message: e });
+    res.json({ error: e });
   }
+});
+
+//test
+router.post("/test", async (req, res) => {
+  res.json(req.body);
 });
 
 //save user
@@ -37,7 +42,7 @@ router.post("/", async (req, res) => {
     .then((data) => res.status(201).json(data))
 
     .catch((e) => {
-      res.json({ message: e });
+      res.json({ error: e });
       console.log(e);
     });
 });
@@ -48,7 +53,7 @@ router.get("/:id", async (req, res) => {
     const user = User.findById(req.params.id);
     res.json(user);
   } catch (e) {
-    res.json({ message: e });
+    res.json({ error: e });
   }
 });
 

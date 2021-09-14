@@ -32,7 +32,7 @@ router.post("/depBalance/:id", verify, async (req, res) => {
   try {
     const account = await Account.findById(req.params.id);
 
-    account.balance += req.body.amount;
+    account.balance += parseInt(req.body.amount);
     await account.save().then(() => res.json(account));
   } catch (e) {
     res.json({ message: e });
@@ -44,7 +44,7 @@ router.post("/witBalance/:id", verify, async (req, res) => {
   try {
     const account = await Account.findById(req.params.id);
 
-    account.balance -= req.body.amount;
+    account.balance -= parseInt(req.body.amount);
     await account.save().then(() => res.json(account));
   } catch (e) {
     res.json({ message: e });
@@ -62,8 +62,8 @@ router.post("/transfer/:id", verify, async (req, res) => {
       }),
     ]);
 
-    myAccount.balance -= req.body.amount;
-    recAccount.balance += req.body.amount;
+    myAccount.balance -= parseInt(req.body.amount);
+    recAccount.balance += parseInt(req.body.amount);
 
     [myAccount, recAccount] = await Promise.all([
       myAccount.save(),

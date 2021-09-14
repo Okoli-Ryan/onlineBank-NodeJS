@@ -1,7 +1,34 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Modal from "../components/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { authPoints } from "../constants";
 
 export default function SetupPin() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authReducer);
+  const history = useHistory();
+  const [id, setId] = useState({ code: 10, message: null });
   const [value, setValue] = useState(0);
+
+  const setPin = () => {
+    axios(
+      {
+        method: "post",
+        url: authPoints(`/userAuths/setPin`),
+        data: { id: user.id, pin: value },
+        responseType: "json",
+      },
+      { withCredentials: true }
+    )
+      // .then((res) => console.log(res))
+      .then(() => history.replace("/"))
+      .catch((e) => {
+        console.log("error: " + e);
+        setId({ code: 999, message: e });
+      });
+  };
   return (
     <div
       style={{
@@ -26,9 +53,10 @@ export default function SetupPin() {
           textAlign: "center",
         }}
       />
-      <button className="button" style={{ fontWeight: "500" }}>
+      <button className="button" style={{ fontWeight: "500" }} onClick={setPin}>
         Submit
       </button>
+      <Modal id={id} setId={setId} />
     </div>
   );
 }

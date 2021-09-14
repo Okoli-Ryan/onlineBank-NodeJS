@@ -9,25 +9,32 @@ const SECRET = process.env.SECRET;
 //set pin
 router.post("/setPin", async (req, res) => {
   const userAuth = await UserAuth.findById(req.body.id, (err, obj) => {
-    if (err) return res.status(500).send({ message: err });
+    if (err) return res.status(500).send({ error: err });
 
-    if (!obj) return res.status(404).send({ message: "user not found" });
+    if (!obj) return res.status(404).send({ error: "user not found" });
 
     if (obj.status === "pending")
-      return res.status(401).send({ message: "verify account first" });
+      return res.status(401).send({ error: "verify account first" });
 
     return obj;
   });
 
-  const token = jwt.sign({ user: userAuth._id }, SECRET, { expiresIn: "2m" });
+  const token = jwt.sign({ user: req.body.id }, SECRET, { expiresIn: "2m" });
 
   userAuth.pin = bcrypt.hashSync(req.body.pin, 8);
 
   userAuth
     .save()
-    .then(() => console.log("user set"))
-    .then(() => res.cookie("auth-token", token).send(token))
-    .catch(() => res.status(500).send({ message: "error saving userAuth" }));
+    .then(() => {
+      console.log("user set");
+      res.cookie("auth_token", token, {
+        secure: true,
+        maxAge: 120000,
+        httpOnly: true,
+      });
+      res.send(token);
+    })
+    .catch(() => res.status(500).send({ error: "error saving userAuth" }));
 });
 
 //confirm confirmation code
@@ -35,7 +42,7 @@ router.get("/confirm/:id/:confirmationCode", (req, res) => {
   UserAuth.findOne({
     confirmationCode: req.params.confirmationCode,
   }).then((user) => {
-    if (!user) return res.status(404).send({ message: "user not found" });
+    if (!user) return res.status(404).send({ error: "user not found" });
 
     user.status = "active";
     user._id = req.params.id;
@@ -55,27 +62,28 @@ router.post("/login", async (req, res) => {
       bank: req.body.bank,
     },
     function (err, obj) {
-      if (err) return { message: err };
-      if (!obj) return { message: "no user found!" };
+      if (err) return { error: err };
+      if (!obj) return { error: "no user found!" };
 
       return obj._id;
     }
   );
 
   await UserAuth.findById(getUserId, (err, obj) => {
-    if (err) return res.status(500).send({ message: err });
+    if (err) return res.status(500).send({ error: err });
 
-    if (!obj) return res.status(500).send({ message: "user id mismatch" });
+    if (!obj) return res.status(500).send({ error: "user id mismatch" });
 
     if (obj.status === "pending")
-      return res
-        .status(401)
-        .send({ message: "pending verification, go verify your account" });
+      return res.status(401).send({
+        error: "pending verification, go verify your account",
+        errType: "verify",
+      });
 
     const pinValid = bcrypt.compareSync(req.body.pin, obj.pin);
 
     if (!pinValid) {
-      return res.status(401).send({ message: "unauthorized user" });
+      return res.status(401).send({ error: "unauthorized user" });
     } else {
       const token = jwt.sign({ user: obj._id }, SECRET, {
         expiresIn: "2m",
@@ -100,7 +108,7 @@ router.get("/cookie", (req, res) => {
 
 router.get("/logout", (req, res) => {
   // res.clcookie("auth-token", null);
-  res.cookie("auth-token", "", { maxAge: 0 });
+  res.cookie("auth_token", "", { maxAge: 0 });
   req.user = null;
   res.status(200).send({ message: "logged out" });
 });

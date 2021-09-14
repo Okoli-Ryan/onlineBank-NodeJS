@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import styles from "../styles/home.module.css";
 import Option from "../components/option";
 import Modal from "../components/Modal";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function UserHome() {
-  const [id, setId] = useState(10);
+  const [id, setId] = useState({ code: 10, message: null });
+  const history = useHistory();
+  const user = useSelector((state) => state.authReducer);
+
+  if (!user) {
+    history.replace("/login");
+  }
   return (
     <div>
       <h2 className={styles.heading_text}>Choose an option</h2>
